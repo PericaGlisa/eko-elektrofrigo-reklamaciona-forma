@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { Button } from "@/components/ui/button";
 import { Eraser, PenTool } from "lucide-react";
@@ -9,15 +9,11 @@ interface SignaturePadProps {
   label: string;
   onChange: (value: string) => void;
   className?: string;
-  initialValue?: string;
 }
 
-const SignaturePad = ({ id, label, onChange, className, initialValue }: SignaturePadProps) => {
+const SignaturePad = ({ id, label, onChange, className }: SignaturePadProps) => {
   const sigPadRef = useRef<SignatureCanvas>(null);
   const [isEmpty, setIsEmpty] = useState(true);
-
-  // Initialize with existing value if present (limited support in react-signature-canvas for restoring from data URL perfectly without complex handling, 
-  // but we can try to load it if needed. For now, we'll focus on capturing new signatures)
   
   const clear = () => {
     sigPadRef.current?.clear();
@@ -32,9 +28,9 @@ const SignaturePad = ({ id, label, onChange, className, initialValue }: Signatur
         onChange("");
       } else {
         setIsEmpty(false);
-        // Get signature as base64 PNG
-        const dataUrl = sigPadRef.current.getTrimmedCanvas().toDataURL("image/png");
-        console.log("Signature captured for", id, dataUrl.substring(0, 50) + "...");
+        // Direct access to the internal canvas instead of getTrimmedCanvas which seems to be causing issues
+        const canvas = sigPadRef.current.getCanvas();
+        const dataUrl = canvas.toDataURL("image/png");
         onChange(dataUrl);
       }
     }
@@ -65,7 +61,7 @@ const SignaturePad = ({ id, label, onChange, className, initialValue }: Signatur
           ref={sigPadRef}
           penColor="black"
           canvasProps={{
-            className: "w-full h-40 cursor-crosshair bg-white touch-none", // touch-none prevents scrolling while signing on mobile
+            className: "w-full h-40 cursor-crosshair bg-white touch-none",
           }}
           onEnd={handleEnd}
         />

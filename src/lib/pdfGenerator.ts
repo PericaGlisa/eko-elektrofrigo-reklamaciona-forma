@@ -36,11 +36,66 @@ const getFontBase64 = async (url: string): Promise<string> => {
   return btoa(binary);
 };
 
-export const generatePDF = async (data: ComplaintFormData) => {
-  console.log("Generating PDF with data:", data);
-  console.log("Customer Sig Image:", data.customerSignatureImage ? "Present" : "Missing");
-  console.log("Service Sig Image:", data.serviceSignatureImage ? "Present" : "Missing");
+const convertDataUrlToJpeg = (dataUrl: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const width = img.naturalWidth || img.width;
+      const height = img.naturalHeight || img.height;
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Canvas context not available"));
+        return;
+      }
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL("image/jpeg", 0.92));
+    };
+    img.onerror = reject;
+    img.src = dataUrl;
+  });
+};
 
+const addDataUrlImage = async (
+  doc: jsPDF,
+  dataUrl: string | undefined,
+  x: number,
+  y: number,
+  w: number,
+  h: number
+) => {
+  if (!dataUrl || !dataUrl.startsWith("data:image/")) {
+    console.warn("Invalid signature data URL:", dataUrl?.substring(0, 50));
+    return;
+  }
+
+  const isJpeg = dataUrl.startsWith("data:image/jpeg") || dataUrl.startsWith("data:image/jpg");
+  const primaryFormat = isJpeg ? "JPEG" : "PNG";
+
+  try {
+    console.log(`Attempting to add image (${primaryFormat})`);
+    doc.addImage(dataUrl, primaryFormat, x, y, w, h);
+    console.log("Image added successfully on first try");
+    return;
+  } catch (err) {
+    console.warn("First attempt to add image failed:", err);
+  }
+
+  try {
+    console.log("Attempting to convert to JPEG and add image");
+    const jpegDataUrl = await convertDataUrlToJpeg(dataUrl);
+    doc.addImage(jpegDataUrl, "JPEG", x, y, w, h);
+    console.log("Image added successfully after JPEG conversion");
+  } catch (err) {
+    console.error("Failed to add image even after conversion:", err);
+  }
+};
+
+export const generatePDF = async (data: ComplaintFormData) => {
   const doc = new jsPDF("p", "mm", "a4");
   
   // Add custom font for Serbian Latin support
@@ -218,13 +273,7 @@ export const generatePDF = async (data: ComplaintFormData) => {
   doc.setTextColor(...grayColor);
   doc.text("Potpis kupca:", margin, sigY);
   
-  if (data.customerSignatureImage && data.customerSignatureImage.startsWith("data:image")) {
-    try {
-      doc.addImage(data.customerSignatureImage, "PNG", margin, sigY + 2, 40, 20);
-    } catch (e) {
-      console.error("Error adding customer signature", e);
-    }
-  }
+  await addDataUrlImage(doc, data.customerSignatureImage, margin, sigY + 2, 40, 20);
   
   doc.setDrawColor(...grayColor);
   doc.setLineWidth(0.5);
@@ -240,13 +289,7 @@ export const generatePDF = async (data: ComplaintFormData) => {
   doc.setTextColor(...grayColor);
   doc.text("Potpis servisera:", serviceX, sigY);
 
-  if (data.serviceSignatureImage && data.serviceSignatureImage.startsWith("data:image")) {
-    try {
-      doc.addImage(data.serviceSignatureImage, "PNG", serviceX, sigY + 2, 40, 20);
-    } catch (e) {
-      console.error("Error adding service signature", e);
-    }
-  }
+  await addDataUrlImage(doc, data.serviceSignatureImage, serviceX, sigY + 2, 40, 20);
 
   doc.setDrawColor(...grayColor); // Ensure draw color is reset
   doc.line(serviceX, sigY + 25, serviceX + colWidth - 10, sigY + 25);

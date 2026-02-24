@@ -65,16 +65,14 @@ const ComplaintForm = () => {
 
   const selectedCategories = watch("categories") || [];
 
-  // Generate automatic complaint number
   useEffect(() => {
     const now = new Date();
-    const dateStr = now.toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD
-    const timeStr = now.toTimeString().slice(0, 8).replace(/:/g, ""); // HHMMSS
+    const dateStr = now.toISOString().slice(0, 10).replace(/-/g, "");
+    const timeStr = now.toTimeString().slice(0, 8).replace(/:/g, "");
     const autoNumber = `REK-${dateStr}-${timeStr}`;
-    setValue("complaintNumber", autoNumber);
+    setValue("complaintNumber", autoNumber, { shouldDirty: false, shouldTouch: false, shouldValidate: true });
   }, [setValue]);
 
-  // Register signature fields
   useEffect(() => {
     register("customerSignatureImage");
     register("serviceSignatureImage");
@@ -107,9 +105,9 @@ const ComplaintForm = () => {
   };
 
   const onSubmit = async (data: ComplaintFormData) => {
-    console.log("Form Data Submitted:", data);
-    console.log("Customer Sig:", data.customerSignatureImage?.substring(0, 50));
-    console.log("Service Sig:", data.serviceSignatureImage?.substring(0, 50));
+    console.log("SUBMIT DATA:", data);
+    console.log("Customer Sig Len:", data.customerSignatureImage?.length);
+    console.log("Service Sig Len:", data.serviceSignatureImage?.length);
     
     setIsGenerating(true);
     try {
@@ -117,7 +115,7 @@ const ComplaintForm = () => {
       setShowSuccess(true);
       toast.success("PDF je uspešno generisan!");
     } catch (err) {
-      console.error(err);
+      console.error("PDF GENERATION ERROR:", err);
       toast.error("Greška pri generisanju PDF-a.");
     } finally {
       setIsGenerating(false);
@@ -342,7 +340,7 @@ const ComplaintForm = () => {
                 <SignaturePad 
                   id="customerSignaturePad"
                   label="Svojeručni potpis kupca"
-                  onChange={(val) => setValue("customerSignatureImage", val)}
+                  onChange={(val) => setValue("customerSignatureImage", val, { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
                 />
               </div>
               
@@ -353,7 +351,7 @@ const ComplaintForm = () => {
                 <SignaturePad 
                   id="serviceSignaturePad"
                   label="Svojeručni potpis servisera"
-                  onChange={(val) => setValue("serviceSignatureImage", val)}
+                  onChange={(val) => setValue("serviceSignatureImage", val, { shouldDirty: true, shouldTouch: true, shouldValidate: true })}
                 />
               </div>
             </div>
