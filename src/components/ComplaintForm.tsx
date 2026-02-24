@@ -67,10 +67,10 @@ const ComplaintForm = () => {
 
   // Generate automatic complaint number
   useEffect(() => {
-    const today = new Date();
-    const dateStr = today.toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD
-    const randomSuffix = Math.floor(1000 + Math.random() * 9000).toString(); // 4 digit random
-    const autoNumber = `REK-${dateStr}-${randomSuffix}`;
+    const now = new Date();
+    const dateStr = now.toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD
+    const timeStr = now.toTimeString().slice(0, 8).replace(/:/g, ""); // HHMMSS
+    const autoNumber = `REK-${dateStr}-${timeStr}`;
     setValue("complaintNumber", autoNumber);
   }, [setValue]);
 
