@@ -65,6 +65,15 @@ const ComplaintForm = () => {
 
   const selectedCategories = watch("categories") || [];
 
+  // Generate automatic complaint number
+  useEffect(() => {
+    const today = new Date();
+    const dateStr = today.toISOString().slice(0, 10).replace(/-/g, ""); // YYYYMMDD
+    const randomSuffix = Math.floor(1000 + Math.random() * 9000).toString(); // 4 digit random
+    const autoNumber = `REK-${dateStr}-${randomSuffix}`;
+    setValue("complaintNumber", autoNumber);
+  }, [setValue]);
+
   // Register signature fields
   useEffect(() => {
     register("customerSignatureImage");
@@ -149,8 +158,10 @@ const ComplaintForm = () => {
               <div className="space-y-1.5">
                 <FloatingLabelInput 
                   id="complaintNumber" 
-                  label="Broj reklamacije *" 
+                  label="Broj reklamacije (automatski)" 
                   {...register("complaintNumber")} 
+                  readOnly
+                  className="bg-gray-50/50 cursor-default opacity-80 font-mono text-sm tracking-wide text-primary/80 border-primary/20"
                 />
                 <FormError message={errors.complaintNumber?.message} />
               </div>
