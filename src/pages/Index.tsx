@@ -1,11 +1,9 @@
 import ComplaintForm from "@/components/ComplaintForm";
-import { SplashScreen } from "@/components/SplashScreen";
 import { Snowflake } from "lucide-react";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-slate-50 relative overflow-hidden selection:bg-primary/20 selection:text-primary">
-      <SplashScreen />
       {/* Dynamic Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/5 blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
