@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   FileDown,
   ClipboardList,
@@ -59,7 +59,6 @@ const ComplaintForm = () => {
     defaultValues: {
       receptionDate: new Date().toISOString().split("T")[0],
       categories: [],
-      warrantyStatus: "in_warranty",
     },
   });
 
@@ -298,34 +297,22 @@ const ComplaintForm = () => {
         {/* Warranty */}
         <div id="section-5" className="scroll-mt-24">
           <FormSection title="Garancija" icon={<ShieldCheck className="h-4 w-4" />} index={5}>
-            <RadioGroup
-              defaultValue="in_warranty"
-              onValueChange={(v) => setValue("warrantyStatus", v as "in_warranty" | "out_of_warranty")}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <motion.label 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-3 p-4 rounded-xl border border-border/60 bg-background/50 cursor-pointer transition-all duration-200 hover:border-primary/40 has-[:checked]:border-primary has-[:checked]:bg-primary/10 flex-1 shadow-sm"
-              >
-                <RadioGroupItem value="in_warranty" id="in_warranty" className="text-primary border-primary" />
-                <div>
-                  <span className="font-semibold text-sm text-primary">U garanciji</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">Proizvod je pod aktivnom garancijom</p>
-                </div>
-              </motion.label>
-              <motion.label 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="flex items-center gap-3 p-4 rounded-xl border border-border/60 bg-background/50 cursor-pointer transition-all duration-200 hover:border-destructive/30 has-[:checked]:border-destructive/50 has-[:checked]:bg-destructive/5 flex-1 shadow-sm"
-              >
-                <RadioGroupItem value="out_of_warranty" id="out_of_warranty" className="text-destructive border-destructive" />
-                <div>
-                  <span className="font-semibold text-sm text-destructive">Van garancije</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">Garancijski rok je istekao</p>
-                </div>
-              </motion.label>
-            </RadioGroup>
+            <Alert className="border-primary/20 bg-primary/5">
+              <Info className="h-4 w-4 text-primary" />
+              <AlertTitle>Popunjava prodavac</AlertTitle>
+              <AlertDescription>
+                <p>
+                  Odluku o tome da li je reklamacija u garanciji donosi prodavac nakon uvida u dokaz o kupovini i uslove garancije.
+                </p>
+              </AlertDescription>
+            </Alert>
+            <div className="pt-4 space-y-1.5">
+              <FloatingLabelInput
+                id="proofOfPurchaseNumber"
+                label="Broj računa / fakture (opciono)"
+                {...register("proofOfPurchaseNumber")}
+              />
+            </div>
           </FormSection>
         </div>
 

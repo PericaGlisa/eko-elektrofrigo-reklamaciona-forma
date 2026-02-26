@@ -24,7 +24,7 @@ export const complaintSchema = z.object({
   serviceFindings: z.string().trim().max(3000).optional(),
 
   // Warranty
-  warrantyStatus: z.enum(["in_warranty", "out_of_warranty"]),
+  proofOfPurchaseNumber: z.string().trim().max(100).optional(),
 
   // Signatures
   customerSignature: z.string().trim().max(100).optional(),

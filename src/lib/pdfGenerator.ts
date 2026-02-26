@@ -244,14 +244,36 @@ export const generatePDF = async (data: ComplaintFormData) => {
   addTextBlock("Servisni nalaz / tehnička analiza", data.serviceFindings);
 
   // Section: Warranty
-  addSectionTitle("GARANCIJA");
+  addSectionTitle("GARANCIJA (POPUNJAVA PRODAVAC)");
   doc.setFontSize(9);
-  const warrantyText = data.warrantyStatus === "in_warranty" ? "U garanciji" : "Van garancije";
-  doc.setTextColor(...primaryColor);
-  doc.setFont("Roboto", "bold");
-  doc.text(warrantyText, margin, y);
-  doc.setFont("Roboto", "normal");
+  addField("Broj računa / fakture", data.proofOfPurchaseNumber);
+
+  if (y > 275) { doc.addPage(); y = 20; }
+  const boxSize = 4;
+  const rowY = y;
+  doc.setDrawColor(...grayColor);
+  doc.setLineWidth(0.3);
+  doc.rect(margin, rowY, boxSize, boxSize);
+  doc.text("U garanciji", margin + boxSize + 3, rowY + 3.2);
+
+  const secondX = margin + 55;
+  doc.rect(secondX, rowY, boxSize, boxSize);
+  doc.text("Van garancije", secondX + boxSize + 3, rowY + 3.2);
+  y += 10;
+
+  if (y > 275) { doc.addPage(); y = 20; }
+  doc.setTextColor(...grayColor);
+  doc.text("Osnov / napomena:", margin, y);
   doc.setTextColor(0, 0, 0);
+  doc.setLineWidth(0.2);
+  doc.line(margin + 33, y, pageWidth - margin, y);
+  y += 8;
+
+  if (y > 275) { doc.addPage(); y = 20; }
+  doc.setTextColor(...grayColor);
+  doc.text("Datum odluke:", margin, y);
+  doc.setTextColor(0, 0, 0);
+  doc.line(margin + 25, y, margin + 60, y);
   y += 8;
 
   // Section: Signatures

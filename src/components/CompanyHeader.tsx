@@ -24,8 +24,8 @@ const CompanyHeader = () => {
           className="flex-shrink-0 relative group"
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-blue-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
-          <div className="relative transition-transform duration-300 group-hover:scale-105 p-2">
-            <img src={ekoLogo} alt="EKO Elektrofrigo logo" className="h-20 w-auto object-contain drop-shadow-sm" />
+          <div className="relative transition-transform duration-300 group-hover:scale-105 p-1">
+            <img src={ekoLogo} alt="EKO Elektrofrigo logo" className="h-28 sm:h-32 w-auto object-contain drop-shadow-md" />
           </div>
         </motion.div>
 
@@ -37,7 +37,7 @@ const CompanyHeader = () => {
           className="flex-1 text-center md:text-right space-y-5"
         >
           <div>
-            <h1 className="text-3xl font-heading font-bold text-slate-900 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-heading font-bold text-slate-900 tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700">
               {COMPANY.name}
             </h1>
             <div className="flex flex-wrap items-center justify-center md:justify-end gap-3 text-sm text-slate-500 mt-2">

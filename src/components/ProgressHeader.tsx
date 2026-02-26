@@ -25,7 +25,7 @@ const ProgressHeader = ({ currentStep, totalSteps, steps }: ProgressHeaderProps)
           
           {/* Logo / Home Icon */}
           <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0 shadow-lg shadow-slate-900/20 ring-2 ring-white">
-            <span className="font-bold text-[10px] sm:text-xs">EF</span>
+            <span className="font-bold text-[9px] sm:text-[10px] tracking-tight">EEF</span>
           </div>
 
           <div className="h-4 w-[1px] bg-slate-200 mx-0.5 sm:mx-1" />
