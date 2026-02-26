@@ -355,18 +355,6 @@ const ComplaintForm = () => {
                 />
               </div>
             </div>
-            
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-6 flex items-start sm:items-center gap-3 text-xs text-muted-foreground bg-primary/5 p-4 rounded-xl border border-primary/10"
-            >
-              <Info className="w-4 h-4 text-primary shrink-0 mt-0.5 sm:mt-0" />
-              <p>
-                <span className="font-semibold text-primary">Napomena:</span> Elektronski potpis nije obavezan. Dokument možete generisati bez potpisa i potpisati ga ručno nakon štampanja.
-              </p>
-            </motion.div>
           </FormSection>
         </div>
 
