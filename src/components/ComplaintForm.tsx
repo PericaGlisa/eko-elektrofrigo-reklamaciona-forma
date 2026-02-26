@@ -310,8 +310,8 @@ const ComplaintForm = () => {
               >
                 <RadioGroupItem value="in_warranty" id="in_warranty" className="text-primary border-primary" />
                 <div>
-                  <span className="font-semibold text-sm text-primary">Prijava reklamacije u garantnom roku</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">Posedujem overen garantni list i/ili fiskalni račun</p>
+                  <span className="font-semibold text-sm text-primary">U garanciji</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">Proizvod je pod aktivnom garancijom</p>
                 </div>
               </motion.label>
               <motion.label 
@@ -321,23 +321,11 @@ const ComplaintForm = () => {
               >
                 <RadioGroupItem value="out_of_warranty" id="out_of_warranty" className="text-destructive border-destructive" />
                 <div>
-                  <span className="font-semibold text-sm text-destructive">Prijava kvara van garantnog roka</span>
-                  <p className="text-xs text-muted-foreground mt-0.5">Uređaj nije u garanciji ili nemam dokumentaciju</p>
+                  <span className="font-semibold text-sm text-destructive">Van garancije</span>
+                  <p className="text-xs text-muted-foreground mt-0.5">Garancijski rok je istekao</p>
                 </div>
               </motion.label>
             </RadioGroup>
-            
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="mt-4 flex items-start sm:items-center gap-3 text-xs text-muted-foreground bg-primary/5 p-4 rounded-xl border border-primary/10"
-            >
-              <Info className="w-4 h-4 text-primary shrink-0 mt-0.5 sm:mt-0" />
-              <p>
-                <span className="font-semibold text-primary">Napomena:</span> Za ostvarivanje prava na garanciju neophodno je priložiti dokaz o kupovini (račun/garantni list). Status garancije konačno potvrđuje ovlašćeni servis.
-              </p>
-            </motion.div>
           </FormSection>
         </div>
 

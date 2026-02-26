@@ -246,7 +246,7 @@ export const generatePDF = async (data: ComplaintFormData) => {
   // Section: Warranty
   addSectionTitle("GARANCIJA");
   doc.setFontSize(9);
-  const warrantyText = data.warrantyStatus === "in_warranty" ? "Zahtev kupca: Prijava reklamacije u garantnom roku" : "Zahtev kupca: Prijava kvara van garantnog roka";
+  const warrantyText = data.warrantyStatus === "in_warranty" ? "U garanciji" : "Van garancije";
   doc.setTextColor(...primaryColor);
   doc.setFont("Roboto", "bold");
   doc.text(warrantyText, margin, y);
