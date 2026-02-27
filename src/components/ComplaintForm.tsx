@@ -141,7 +141,7 @@ const ComplaintForm = () => {
             Digitalni obrazac
           </div>
           <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-            Reklamacioni obrazac
+            EKO Reklamacioni Centar
           </h1>
           <p className="text-muted-foreground text-sm mt-3 max-w-md mx-auto leading-relaxed">
             Popunite formu ispod kako biste generisali zvanični reklamacioni obrazac u PDF formatu.
