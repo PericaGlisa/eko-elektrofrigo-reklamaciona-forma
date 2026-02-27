@@ -25,7 +25,7 @@ const CompanyHeader = () => {
         >
           <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-blue-500/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
           <div className="relative transition-transform duration-300 group-hover:scale-105 p-1">
-            <img src={ekoLogo} alt="EKO Elektrofrigo logo" className="h-28 sm:h-32 w-auto object-contain drop-shadow-md" />
+            <img src={ekoLogo} alt="EKO Elektrofrigo logo" className="h-16 sm:h-20 w-auto object-contain drop-shadow-sm" />
           </div>
         </motion.div>
 

@@ -141,10 +141,10 @@ const ComplaintForm = () => {
             Digitalni obrazac
           </div>
           <h1 className="font-heading text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
-            Reklamacioni List
+            Reklamacioni obrazac
           </h1>
           <p className="text-muted-foreground text-sm mt-3 max-w-md mx-auto leading-relaxed">
-            Popunite obrazac ispod kako biste generisali zvanični reklamacioni list u PDF formatu.
+            Popunite formu ispod kako biste generisali zvanični reklamacioni obrazac u PDF formatu.
           </p>
         </motion.div>
 
